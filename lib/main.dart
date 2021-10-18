@@ -1,7 +1,25 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:kondir/screens/takePicture.dart';
+import './screens/home.dart';
 
-void main() {
-  runApp(EntryPoint());
+Future<void> main() async {
+  final firstCamera = await initCamera();
+  runApp(
+    MaterialApp(
+      theme: ThemeData.light(),
+      home: TakePictureScreen(
+        camera: firstCamera,
+      ),
+    ),
+  );
+}
+
+Future<CameraDescription> initCamera() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final cameras = await availableCameras();
+  return cameras.first;
 }
 
 class EntryPoint extends StatelessWidget {
@@ -14,53 +32,6 @@ class EntryPoint extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Kondir'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
     );
   }
 }
