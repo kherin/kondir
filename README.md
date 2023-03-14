@@ -2,4 +2,4 @@
 
 ## Project Description
 
-A flutter mobile app for learning about the traffic signs in Mauritius
+A flutter-based mobile app for recognizing traffic signs in Mauritius by leveraging incremental machine-learning.
